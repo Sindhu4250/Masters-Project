@@ -1,0 +1,15 @@
+@media (max-width: 767px) {
+    .headerNavBar{
+        display: block;
+        position: absolute;
+        max-width: 100px;
+        background: #fff;
+        right: 1%;
+        z-index: 1;
+        top: 53px;
+    }
+    
+    .headerNavBar ul{
+        margin-top: 0;
+    }
+}
