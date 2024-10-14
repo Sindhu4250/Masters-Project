@@ -40,11 +40,7 @@ export default function Header() {
                         About
                     </Link>
                 </Navbar.Link>
-                <Navbar.Link active={path === "/projects"} >
-                    <Link to='/projects'>
-                        Projects
-                    </Link>
-                </Navbar.Link>
+    
             </Navbar.Collapse>
         </div>
         <div className='flex gap-2 md:order-2'>
