@@ -2,8 +2,9 @@ import React from 'react';
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import OAuth from '../components/OAuth';
 
-export default function Signup() {
+export default function SignUp() {
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -98,6 +99,7 @@ export default function Signup() {
                 'Sign Up'
               )}
         </Button>
+        <OAuth />
 
          {/* Already have an account? */}
          <div className="mt-4 text-center">
