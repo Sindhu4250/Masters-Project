@@ -1,6 +1,12 @@
 import React from 'react'
 import { Sidebar } from 'flowbite-react';
-import { HiUser, HiArrowSmRight, HiDocumentText, HiOutlineUserGroup } from 'react-icons/hi';
+import { 
+  HiUser, 
+  HiDocumentText, 
+  HiUserGroup, 
+  HiArrowSmRight,
+  HiChevronRight 
+} from 'react-icons/hi';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { signoutSuccess } from '../redux/user/userSlice';
@@ -36,52 +42,97 @@ export default function DashSidebar() {
     }
   };
   return (
-    <Sidebar className='w-full md:w-56'>
-      <Sidebar.Items>
-        <Sidebar.ItemGroup className='flex flex-col gap-1'>
-          <Link to='/dashboard?tab=profile'>
-            <Sidebar.Item
-              active={tab === 'profile'}
-              icon={HiUser}
-              label={currentUser.isAdmin ? 'Admin' : 'User'}
-              labelColor='dark'
-              as='div'
-            >
-              Profile
-            </Sidebar.Item>
-          </Link>
-          {currentUser.isAdmin && (
-            <Link to='/dashboard?tab=posts'>
-              <Sidebar.Item
-                active={tab === 'posts'}
-                icon={HiDocumentText}
-                as='div'
-              >
-                Posts
-              </Sidebar.Item>
-            </Link>
-          )}
-          {currentUser.isAdmin && (
-            <Link to='/dashboard?tab=users'>
-              <Sidebar.Item
-                active={tab === 'users'}
-                icon={HiOutlineUserGroup}
-                as='div'
-              >
-                Users
-              </Sidebar.Item>
-            </Link>
-          )}
-          <Sidebar.Item
-            icon={HiArrowSmRight}
-            className='cursor-pointer'
-            onClick={handleSignout}
-          >
-            Sign Out
-          </Sidebar.Item>
-        </Sidebar.ItemGroup>
-      </Sidebar.Items>
-    </Sidebar>
-  );
-}
+    <div className="w-full md:w-64 bg-white dark:bg-slate-900 rounded-xl shadow-md border border-slate-200 dark:border-slate-800 backdrop-blur-sm">
+      <div className="p-4">
+        {/* User Profile Section */}
+        <div className="mb-6 pb-4 border-b border-slate-200 dark:border-slate-700">
+          <div className="flex items-center gap-4 px-2 mb-2">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 flex items-center justify-center shadow-inner">
+              <HiUser className="w-6 h-6 text-slate-600 dark:text-slate-300" />
+            </div>
+            <div className="flex flex-col">
+              <p className="font-medium text-lg dark:text-white">Dashboard</p>
+              <span className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                {currentUser.isAdmin ? (
+                  <>
+                    <span className="inline-block w-2 h-2 rounded-full bg-green-500"></span>
+                    Administrator
+                  </>
+                ) : (
+                  <>
+                    <span className="inline-block w-2 h-2 rounded-full bg-blue-500"></span>
+                    User
+                  </>
+                )}
+              </span>
+            </div>
+          </div>
+        </div>
 
+        {/* Navigation Menu */}
+        <nav className="space-y-2">
+          <a 
+            href="/dashboard?tab=profile"
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+              tab === 'profile'
+                ? 'bg-slate-100 dark:bg-slate-800 shadow-sm'
+                : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
+            }`}
+          >
+            <HiUser className={`w-5 h-5 ${
+              tab === 'profile' 
+                ? 'text-blue-600 dark:text-blue-400' 
+                : 'text-slate-600 dark:text-slate-400'
+            }`} />
+            <span className={tab === 'profile' ? 'font-medium' : ''}>Profile</span>
+          </a>
+
+          {currentUser.isAdmin && (
+            <>
+              <a 
+                href="/dashboard?tab=posts"
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                  tab === 'posts'
+                    ? 'bg-slate-100 dark:bg-slate-800 shadow-sm'
+                    : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                }`}
+              >
+                <HiDocumentText className={`w-5 h-5 ${
+                  tab === 'posts' 
+                    ? 'text-blue-600 dark:text-blue-400' 
+                    : 'text-slate-600 dark:text-slate-400'
+                }`} />
+                <span className={tab === 'posts' ? 'font-medium' : ''}>Posts</span>
+              </a>
+
+              <a 
+                href="/dashboard?tab=users"
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                  tab === 'users'
+                    ? 'bg-slate-100 dark:bg-slate-800 shadow-sm'
+                    : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                }`}
+              >
+                <HiUserGroup className={`w-5 h-5 ${
+                  tab === 'users' 
+                    ? 'text-blue-600 dark:text-blue-400' 
+                    : 'text-slate-600 dark:text-slate-400'
+                }`} />
+                <span className={tab === 'users' ? 'font-medium' : ''}>Users</span>
+              </a>
+            </>
+          )}
+
+          {/* Sign Out Button */}
+          <button
+            onClick={handleSignout}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors mt-4"
+          >
+            <HiArrowSmRight className="w-5 h-5" />
+            <span>Sign Out</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+  );
+};
