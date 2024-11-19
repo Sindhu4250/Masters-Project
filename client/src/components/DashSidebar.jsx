@@ -6,7 +6,8 @@ import {
   HiUserGroup, 
   HiArrowSmRight,
   HiChevronRight,
-  HiChat
+  HiChat,
+  HiTemplate
 } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -71,85 +72,119 @@ export default function DashSidebar() {
         </div>
 
         {/* Navigation Menu */}
-        <nav className="space-y-2">
-          <a 
-            href="/dashboard?tab=profile"
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-              tab === 'profile'
-                ? 'bg-slate-100 dark:bg-slate-800 shadow-sm'
-                : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
-            }`}
-          >
-            <HiUser className={`w-5 h-5 ${
-              tab === 'profile' 
-                ? 'text-blue-600 dark:text-blue-400' 
-                : 'text-slate-600 dark:text-slate-400'
-            }`} />
-            <span className={tab === 'profile' ? 'font-medium' : ''}>Profile</span>
-          </a>
+<nav className="space-y-2">
+  {currentUser.isAdmin && (
+    <>
+      <a 
+        href="/dashboard"
+        className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+          !tab
+            ? 'bg-slate-100 dark:bg-slate-800 shadow-sm'
+            : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
+        }`}
+      >
+        <HiTemplate className={`w-5 h-5 ${
+          !tab 
+            ? 'text-blue-600 dark:text-blue-400' 
+            : 'text-slate-600 dark:text-slate-400'
+        }`} />
+        <span className={!tab ? 'font-medium' : ''}>Dashboard</span>
+      </a>
 
-          {currentUser.isAdmin && (
-            <>
-              <a 
-                href="/dashboard?tab=posts"
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-                  tab === 'posts'
-                    ? 'bg-slate-100 dark:bg-slate-800 shadow-sm'
-                    : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
-                }`}
-              >
-                <HiDocumentText className={`w-5 h-5 ${
-                  tab === 'posts' 
-                    ? 'text-blue-600 dark:text-blue-400' 
-                    : 'text-slate-600 dark:text-slate-400'
-                }`} />
-                <span className={tab === 'posts' ? 'font-medium' : ''}>Posts</span>
-              </a>
+      <a 
+        href="/dashboard?tab=profile"
+        className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+          tab === 'profile'
+            ? 'bg-slate-100 dark:bg-slate-800 shadow-sm'
+            : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
+        }`}
+      >
+        <HiUser className={`w-5 h-5 ${
+          tab === 'profile' 
+            ? 'text-blue-600 dark:text-blue-400' 
+            : 'text-slate-600 dark:text-slate-400'
+        }`} />
+        <span className={tab === 'profile' ? 'font-medium' : ''}>Profile</span>
+      </a>
 
-              <a 
-                href="/dashboard?tab=users"
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-                  tab === 'users'
-                    ? 'bg-slate-100 dark:bg-slate-800 shadow-sm'
-                    : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
-                }`}
-              >
-                <HiUserGroup className={`w-5 h-5 ${
-                  tab === 'users' 
-                    ? 'text-blue-600 dark:text-blue-400' 
-                    : 'text-slate-600 dark:text-slate-400'
-                }`} />
-                <span className={tab === 'users' ? 'font-medium' : ''}>Users</span>
-              </a>
-              
-              <a 
-                href="/dashboard?tab=comments"
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-                  tab === 'comments'
-                    ? 'bg-slate-100 dark:bg-slate-800 shadow-sm'
-                    : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
-                }`}
-              >
-                <HiChat className={`w-5 h-5 ${
-                  tab === 'comments' 
-                    ? 'text-blue-600 dark:text-blue-400' 
-                    : 'text-slate-600 dark:text-slate-400'
-                }`} />
-                <span className={tab === 'comments' ? 'font-medium' : ''}>Comments</span>
-              </a>
-            
-            </>
-          )}
+      <a 
+        href="/dashboard?tab=posts"
+        className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+          tab === 'posts'
+            ? 'bg-slate-100 dark:bg-slate-800 shadow-sm'
+            : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
+        }`}
+      >
+        <HiDocumentText className={`w-5 h-5 ${
+          tab === 'posts' 
+            ? 'text-blue-600 dark:text-blue-400' 
+            : 'text-slate-600 dark:text-slate-400'
+        }`} />
+        <span className={tab === 'posts' ? 'font-medium' : ''}>Posts</span>
+      </a>
 
-          {/* Sign Out Button */}
-          <button
-            onClick={handleSignout}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors mt-4"
-          >
-            <HiArrowSmRight className="w-5 h-5" />
-            <span>Sign Out</span>
-          </button>
-        </nav>
+      <a 
+        href="/dashboard?tab=users"
+        className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+          tab === 'users'
+            ? 'bg-slate-100 dark:bg-slate-800 shadow-sm'
+            : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
+        }`}
+      >
+        <HiUserGroup className={`w-5 h-5 ${
+          tab === 'users' 
+            ? 'text-blue-600 dark:text-blue-400' 
+            : 'text-slate-600 dark:text-slate-400'
+        }`} />
+        <span className={tab === 'users' ? 'font-medium' : ''}>Users</span>
+      </a>
+      
+      <a 
+        href="/dashboard?tab=comments"
+        className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+          tab === 'comments'
+            ? 'bg-slate-100 dark:bg-slate-800 shadow-sm'
+            : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
+        }`}
+      >
+        <HiChat className={`w-5 h-5 ${
+          tab === 'comments' 
+            ? 'text-blue-600 dark:text-blue-400' 
+            : 'text-slate-600 dark:text-slate-400'
+        }`} />
+        <span className={tab === 'comments' ? 'font-medium' : ''}>Comments</span>
+      </a>
+    </>
+  )}
+
+  {/* If not admin, show only profile */}
+  {!currentUser.isAdmin && (
+    <a 
+      href="/dashboard?tab=profile"
+      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+        tab === 'profile'
+          ? 'bg-slate-100 dark:bg-slate-800 shadow-sm'
+          : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
+      }`}
+    >
+      <HiUser className={`w-5 h-5 ${
+        tab === 'profile' 
+          ? 'text-blue-600 dark:text-blue-400' 
+          : 'text-slate-600 dark:text-slate-400'
+      }`} />
+      <span className={tab === 'profile' ? 'font-medium' : ''}>Profile</span>
+    </a>
+  )}
+
+  {/* Sign Out Button */}
+  <button
+    onClick={handleSignout}
+    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors mt-4"
+  >
+    <HiArrowSmRight className="w-5 h-5" />
+    <span>Sign Out</span>
+  </button>
+</nav>
       </div>
     </div>
   );
