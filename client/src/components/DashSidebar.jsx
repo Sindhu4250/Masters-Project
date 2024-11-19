@@ -5,7 +5,8 @@ import {
   HiDocumentText, 
   HiUserGroup, 
   HiArrowSmRight,
-  HiChevronRight 
+  HiChevronRight,
+  HiChat
 } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -120,6 +121,23 @@ export default function DashSidebar() {
                 }`} />
                 <span className={tab === 'users' ? 'font-medium' : ''}>Users</span>
               </a>
+              
+              <a 
+                href="/dashboard?tab=comments"
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                  tab === 'comments'
+                    ? 'bg-slate-100 dark:bg-slate-800 shadow-sm'
+                    : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                }`}
+              >
+                <HiChat className={`w-5 h-5 ${
+                  tab === 'comments' 
+                    ? 'text-blue-600 dark:text-blue-400' 
+                    : 'text-slate-600 dark:text-slate-400'
+                }`} />
+                <span className={tab === 'comments' ? 'font-medium' : ''}>Comments</span>
+              </a>
+            
             </>
           )}
 

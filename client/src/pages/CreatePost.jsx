@@ -114,9 +114,11 @@ export default function CreatePost() {
             }
           >
             <option value="uncategorized">Select a Category</option>
-            <option value="javascript">Food</option>
-            <option value="reactjs">Technology</option>
-            <option value="nextjs">Travel</option>
+            <option value="food">Food</option>
+            <option value="travel">Travel</option>
+            <option value="technology">Technology</option>
+            <option value="sports">Sports</option>
+            <option value="music">Music</option>
           </Select>
         </div>
 
