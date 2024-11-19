@@ -1,14 +1,16 @@
-import React from 'react';
 import { Button, Spinner } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import CommentSection from '../components/CommentSection';
+import PostCard from '../components/PostCard';
 
 export default function PostPage() {
   const { postSlug } = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [post, setPost] = useState(null);
+  const [recentPosts, setRecentPosts] = useState(null);
+
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -32,48 +34,66 @@ export default function PostPage() {
     };
     fetchPost();
   }, [postSlug]);
+
+  useEffect(() => {
+    try {
+      const fetchRecentPosts = async () => {
+        const res = await fetch(`/api/post/getposts?limit=3`);
+        const data = await res.json();
+        if (res.ok) {
+          setRecentPosts(data.posts);
+        }
+      };
+      fetchRecentPosts();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, []);
   if (loading)
     return (
       <div className='flex justify-center items-center min-h-screen'>
         <Spinner size='xl' />
       </div>
     );
-  return<main className="relative p-6 flex flex-col max-w-4xl mx-auto min-h-screen bg-gray-50 dark:bg-gray-800 shadow-lg rounded-lg">
-  <div className="flex justify-start p-3 w-full max-w-2xl text-lg font-bold text-gray-800 dark:text-gray-300">
-      <span>{post ? new Date(post.createdAt).toLocaleDateString() : ''}</span>
-  </div>
-
-  <h1 className="text-4xl mt-4 mb-4 px-4 text-center font-serif text-gray-800 dark:text-gray-100 max-w-2xl mx-auto lg:text-5xl">
-      {post?.title}
-  </h1>
-
-  <Link
-      to={`/search?category=${post?.category}`}
-      className="self-center mt-4 mb-6"
-  >
-      <Button
-          color="blue"
-          pill
-          size="sm"
-          className="font-semibold shadow-md dark:bg-blue-600 dark:text-white"
+  return (
+    <main className='p-3 flex flex-col max-w-6xl mx-auto min-h-screen'>
+      <h1 className='text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl'>
+        {post && post.title}
+      </h1>
+      <Link
+        to={`/search?category=${post && post.category}`}
+        className='self-center mt-5'
       >
-          {post?.category}
-      </Button>
-  </Link>
-
-  <img
-      src={post?.image}
-      alt={post?.title}
-      className="my-6 max-h-[300px] w-full object-cover rounded-lg shadow-md"
-  />
-
-  <div
-      className="px-6 py-4 max-w-2xl mx-auto w-full text-gray-700 dark:text-gray-300 leading-relaxed post-content"
-      dangerouslySetInnerHTML={{ __html: post?.content }}
-  >
-
+        <Button color='gray' pill size='xs'>
+          {post && post.category}
+        </Button>
+      </Link>
+      <img
+        src={post && post.image}
+        alt={post && post.title}
+        className='mt-10 p-3 max-h-[400px] w-full md:w-3/4 lg:w-2/3 object-cover mx-auto'
+        />
+      <div className='flex justify-between p-3 border-b border-slate-500 mx-auto w-full max-w-2xl text-xs'>
+        <span>{post && new Date(post.createdAt).toLocaleDateString()}</span>
+        
+      </div>
+      <div
+        className='p-3 max-w-2xl mx-auto w-full post-content'
+        dangerouslySetInnerHTML={{ __html: post && post.content }}
+      ></div>
+      
+      <CommentSection postId={post._id} />
+      <div className='w-full mt-12 px-4'>
+      <h1 className='text-2xl font-serif text-center mb-8'>Recent articles</h1>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto'>
+        {recentPosts &&
+          recentPosts.map((post) => (
+            <div key={post._id} className="w-full">
+              <PostCard post={post} />
+        </div>
+      ))}
   </div>
-  <CommentSection postId={post._id} />
-
-</main>;
+</div>
+    </main>
+  );
 }
