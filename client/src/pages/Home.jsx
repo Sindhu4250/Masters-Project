@@ -24,10 +24,10 @@ export default function Home() {
   return (
     <div className='min-h-screen max-w-6xl mx-auto flex flex-col gap-8 p-3'>
       <div className='flex flex-col gap-6 py-20 px-4 max-w-6xl mx-auto'>
-        <h1 className='text-3xl font-bold lg:text-6xl'>Welcome to Blog Canvas</h1>
-        <p className='text-gray-500 text-xs sm:text-sm'>
-          Where stories come alive. Explore our collection of insightful articles, thought-provoking discussions, 
-          and expert perspectives on various topics.
+        <h1 className='text-2xl font-bold lg:text-5xl'>Welcome to Blog Canvas</h1>
+        <p className='text-gray-500 text-sm sm:text-lg'>
+        A dedicated space featuring carefully curated articles from our writers. 
+        Read interesting articles and share your thoughts through comments.
         </p>
         <Link
           to='/search'

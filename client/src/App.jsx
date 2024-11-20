@@ -25,7 +25,7 @@ export default function App() {
     <Header />
       <Routes>
         <Route path="/" element={<Navigate replace to="/home" />} />
-        <Route path="/home" element={<Home />}  />
+        <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path='/sign-up' element={<SignUp />} />

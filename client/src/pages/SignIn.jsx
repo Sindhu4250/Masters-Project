@@ -17,6 +17,8 @@ export default function SignIn() {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
 
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
@@ -42,7 +44,6 @@ export default function SignIn() {
       dispatch(signInFailure(error.message));
     }
   };
-
   return (
     <div className={`flex flex-col items-center justify-center min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}>
       {/* Welcome Text */}
