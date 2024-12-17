@@ -3,13 +3,19 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import CommentSection from '../components/CommentSection';
 import PostCard from '../components/PostCard';
+import FavouriteButton from '../components/FavouriteButton';
+import { useSelector } from 'react-redux';
+
 
 export default function PostPage() {
+  const { currentUser } = useSelector((state) => state.user);
+
   const { postSlug } = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [post, setPost] = useState(null);
   const [recentPosts, setRecentPosts] = useState(null);
+  
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -60,6 +66,9 @@ export default function PostPage() {
       <h1 className='text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl'>
         {post && post.title}
       </h1>
+      <div className="flex justify-center mt-2 mb-4">
+    {currentUser && <FavouriteButton postId={post?._id} />}
+  </div>
       <Link
         to={`/search?category=${post && post.category}`}
         className='self-center mt-5'
@@ -82,7 +91,7 @@ export default function PostPage() {
         dangerouslySetInnerHTML={{ __html: post && post.content }}
       ></div>
       
-      <CommentSection postId={post._id} />
+      <CommentSection postId={post && post._id} />
       <div className='w-full mt-12 px-4'>
       <h1 className='text-2xl font-serif text-center mb-8'>Recent articles</h1>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto'>

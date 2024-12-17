@@ -24,30 +24,44 @@ export default function UpdatePost() {
   const [publishError, setPublishError] = useState(null);
   const { postId } = useParams();
   
+
+  
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
 
 
-  useEffect(() => {
-    try {
-      const fetchPost = async () => {
-        const res = await fetch(`/api/post/getposts?postId=${postId}`);
-        const data = await res.json();
-        if (!res.ok) {
-          console.log(data.message);
-          setPublishError(data.message);
-          return;
+  const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+    const fetchPost = async () => {
+        try {
+            setLoading(true);
+            const res = await fetch(`/api/post/getposts?postId=${postId}`);
+            const data = await res.json();
+            
+            if (!res.ok) {
+                setPublishError(data.message);
+                return;
+            }
+            
+            if (res.ok && data.posts && data.posts[0]) {
+                setPublishError(null);
+                setFormData(data.posts[0]);
+            } else {
+                setPublishError('Post not found');
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+            setPublishError('Error fetching post data');
+        } finally {
+            setLoading(false);
         }
-        if (res.ok) {
-          setPublishError(null);
-          setFormData(data.posts[0]);
-        }
-      };
-      fetchPost();
-    } catch (error) {
-      console.log(error.message);
+    };
+
+    if (postId) {
+        fetchPost();
     }
-  }, [postId]);
+}, [postId]);
 
   
 
@@ -99,27 +113,44 @@ export default function UpdatePost() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Add validation to ensure we have all required data
+    if (!formData._id || !currentUser._id) {
+        setPublishError('Unable to update post. Missing required data.');
+        return;
+    }
+
     try {
         const res = await fetch(`/api/post/updatepost/${formData._id}/${currentUser._id}`, {
             method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setPublishError(data.message);
-        return;
-      }
-      if (res.ok) {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+        
+        const data = await res.json();
+        
+        if (!res.ok) {
+            setPublishError(data.message || 'Something went wrong updating the post');
+            return;
+        }
+
         setPublishError(null);
         navigate(`/post/${data.slug}`);
-      }
     } catch (error) {
-      setPublishError('Something went wrong');
+        console.error('Update error:', error);
+        setPublishError('Failed to update post. Please try again.');
     }
-  };
+};
+
+if (loading) {
+  return (
+    <div className="p-5 max-w-3xl mx-auto min-h-screen bg-gray-50 rounded-lg shadow-md">
+      <div className="text-center">Loading post data...</div>
+    </div>
+  );
+}
   
   return (
     <div className="p-5 max-w-3xl mx-auto min-h-screen bg-gray-50 rounded-lg shadow-md">
@@ -144,10 +175,12 @@ export default function UpdatePost() {
             }
             value={formData.category}
           >
-            <option value="uncategorized">Select a Category</option>
-            <option value="javascript">Food</option>
-            <option value="reactjs">Technology</option>
-            <option value="nextjs">Travel</option>
+           <option value='uncategorized'>All Categories</option>
+                    <option value='food'>Food</option>
+                    <option value='travel'>Travel</option>
+                    <option value='technology'>Technology</option>
+                    <option value='sports'>Sports</option>
+                    <option value='music'>Music</option>
           </Select>
         </div>
 

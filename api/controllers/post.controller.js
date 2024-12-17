@@ -74,10 +74,22 @@ export const deletepost = async (req, res, next) => {
 };
 
 export const updatepost = async (req, res, next) => {
-  if (!req.user.isAdmin || req.user.id !== req.params.userId) {
-    return next(errorHandler(403, 'You are not allowed to update this post'));
-  }
   try {
+    // Add validation for postId and userId
+    if (!req.params.postId || !req.params.userId) {
+      return next(errorHandler(400, 'Missing postId or userId'));
+    }
+
+    // Check permissions
+    if (!req.user.isAdmin || req.user.id !== req.params.userId) {
+      return next(errorHandler(403, 'You are not allowed to update this post'));
+    }
+
+    const post = await Post.findById(req.params.postId);
+    if (!post) {
+      return next(errorHandler(404, 'Post not found'));
+    }
+
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.postId,
       {
@@ -86,10 +98,11 @@ export const updatepost = async (req, res, next) => {
           content: req.body.content,
           category: req.body.category,
           image: req.body.image,
-        },
+        }
       },
       { new: true }
     );
+
     res.status(200).json(updatedPost);
   } catch (error) {
     next(error);

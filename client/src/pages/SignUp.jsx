@@ -110,7 +110,7 @@ export default function SignUp() {
           <p className={`text-${theme === 'dark' ? 'gray-400' : 'gray-600'}`}>
             Already have an account?{' '}
             <Link to="/sign-in" className="text-orange-500 hover:underline">
-              Sign In
+              Log In
             </Link>
           </p>
         </div>

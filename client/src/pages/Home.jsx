@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'flowbite-react';
+// import Header from '../components/Header';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -22,6 +23,8 @@ export default function Home() {
   }, []);
 
   return (
+    <>
+    {/* <Header /> */}
     <div className='min-h-screen max-w-6xl mx-auto flex flex-col gap-8 p-3'>
       <div className='flex flex-col gap-6 py-20 px-4 max-w-6xl mx-auto'>
         <h1 className='text-2xl font-bold lg:text-5xl'>Welcome to Blog Canvas</h1>
@@ -66,5 +69,6 @@ export default function Home() {
         </Link>
       </div>
     </div>
+    </>
   );
 }

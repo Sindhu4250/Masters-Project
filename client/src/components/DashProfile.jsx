@@ -23,6 +23,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
+// import Header from '../components/Header';
 
 
 
@@ -180,6 +181,8 @@ export default function DashProfile() {
     }
   };
   return (
+    <>
+    {/* <Header /> */}
     <div className='max-w-lg mx-auto p-3 w-full'>
       <h1 className='my-7 text-center font-semibold text-3xl'>Profile</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
@@ -231,16 +234,16 @@ export default function DashProfile() {
           <TextInput
             type='text'
             id='username'
-            placeholder='username'
+            placeholder='Username'
             defaultValue={currentUser.username} onChange={handleChange}
           />
           <TextInput
             type='email'
             id='email'
-            placeholder='email'
+            placeholder='Email'
             defaultValue={currentUser.email} onChange={handleChange}
           />
-          <TextInput type='password' id='password' placeholder='password' onChange={handleChange} />
+          <TextInput type='password' id='password' placeholder='Password' onChange={handleChange} />
           <Button 
           type='submit' 
           color='blue' 
@@ -263,7 +266,7 @@ export default function DashProfile() {
         </form>
         <div className='text-red-500 flex justify-between mt-5'>
         <span onClick={() => setShowModal(true)} className='cursor-pointer'>Delete Account</span>
-          <span onClick={handleSignout} className='cursor-pointer'>Sign Out</span>
+          <span onClick={handleSignout} className='cursor-pointer'>Log Out</span>
         </div>
         {updateUserSuccess && (
         <Alert color='success' className='mt-5'>
@@ -309,5 +312,6 @@ export default function DashProfile() {
 
       </Modal>
     </div>
+    </>
   );
 }

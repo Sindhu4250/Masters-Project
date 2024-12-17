@@ -19,6 +19,8 @@ export default function DashSidebar() {
   const location = useLocation();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
+  
+
 
   const [tab, setTab] = useState('');
   useEffect(() => {
@@ -50,10 +52,20 @@ export default function DashSidebar() {
         <div className="mb-6 pb-4 border-b border-slate-200 dark:border-slate-700">
           <div className="flex items-center gap-4 px-2 mb-2">
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 flex items-center justify-center shadow-inner">
-              <HiUser className="w-6 h-6 text-slate-600 dark:text-slate-300" />
+              {/* <HiUser className="w-6 h-6 text-slate-600 dark:text-slate-300" /> */}
+              <img
+              src={currentUser.profilePicture}
+              alt='user'
+              className="rounded-full w-11 h-11 object-cover"
+              // className={`rounded-full w-full h-full object-cover border-8 border-[lightgray] ${
+              //   imageFileUploadProgress &&
+              //   imageFileUploadProgress < 100 &&
+              //   'opacity-60'
+              // }`} 
+            />
             </div>
             <div className="flex flex-col">
-              <p className="font-medium text-lg dark:text-white">Dashboard</p>
+              <p className="font-medium text-lg dark:text-white">{currentUser.username}</p>
               <span className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1">
                 {currentUser.isAdmin ? (
                   <>
@@ -182,7 +194,7 @@ export default function DashSidebar() {
     className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors mt-4"
   >
     <HiArrowSmRight className="w-5 h-5" />
-    <span>Sign Out</span>
+    <span>Log Out</span>
   </button>
 </nav>
       </div>

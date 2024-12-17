@@ -36,6 +36,9 @@ export default function Header() {
           console.log(data.message);
         } else {
           dispatch(signoutSuccess());
+          
+          navigate('/sign-in');
+
         }
         
       } catch (error) {
@@ -86,6 +89,11 @@ export default function Header() {
                         About
                     </Link>
                 </Navbar.Link>
+                <Navbar.Link active={path === "/favourites"} as={'div'}>
+  <Link to='/favourites'>
+    Favourites
+  </Link>
+</Navbar.Link>
     
             </Navbar.Collapse>
         </div>
@@ -114,7 +122,7 @@ export default function Header() {
               <Dropdown.Item>Profile</Dropdown.Item>
             </Link>
             <Dropdown.Divider />
-            <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
+            <Dropdown.Item onClick={handleSignout}>Log out</Dropdown.Item>
           </Dropdown>
         ) : (
           <Link to='/sign-in'>

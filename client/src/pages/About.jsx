@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from 'flowbite-react';
 import { HiOutlineNewspaper, HiOutlineUserGroup, HiOutlineSearch, HiOutlineChatAlt2 } from 'react-icons/hi';
+// import Header from '../components/Header';
 
 export default function About() {
   const features = [
@@ -35,6 +36,8 @@ export default function About() {
   ];
 
   return (
+    <>
+    {/* <Header /> */}
     <div className='relative bg-gray-50 dark:bg-gray-900'>
       {/* Hero Section - adjust z-index */}
       <div className='relative overflow-hidden bg-gradient-to-br from-teal-400 to-blue-500 py-16'>
@@ -117,5 +120,6 @@ export default function About() {
       
     </div>
     </div>
+    </>
   );
 }

@@ -1,6 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 export default function PostCard({ post }) {
+  
+  if (post != null)
+  {
+
     return (
         <div className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
   <Link to={`/post/${post.slug}`} className="block relative aspect-[16/9] overflow-hidden">
@@ -59,3 +63,4 @@ export default function PostCard({ post }) {
 </div>
       );
     }
+  }
